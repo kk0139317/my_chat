@@ -1,6 +1,8 @@
 import { httpRouter } from "convex/server"
 import { httpAction } from "./_generated/server"
 import { internal } from "./_generated/api"
+import { api } from "./_generated/api";
+
 
 const http = httpRouter()
 
@@ -23,7 +25,8 @@ http.route({
 
       switch (result.type) {
         case "user.created":
-          await ctx.runMutation(internal.users.createUser, {
+          await ctx.runMutation(api.users.createUser, {
+
             tokenIdentifier: `${process.env.CLERK_APP_DOMAIN}|${result.data.id}`,
             email: result.data.email_addresses[0]?.email_address,
             name: `${result.data.first_name ?? "Guest"} ${result.data.last_name ?? ""}`,
